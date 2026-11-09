@@ -6,16 +6,16 @@ Status: planned (session 38, 9 Nov 2026). Nothing is built yet.
 
 ## Decided
 
-- **Versions** (session 38; Mateus had no preference, so the recommended choice): read the binary `.tg` of TuxGuitar 1.0 to 1.5 and the ZIP-and-XML `.tg` of TuxGuitar 2.x; write the 2.x form, as TuxGuitar 2.1 writes it. TuxGuitar 0.7 to 0.9 files (its compatibility readers still open them) only if they turn out cheap once 1.0 reads.
-- **No library**: there is no Rust library for `.tg`, so the reader and writer are our own code, ported from TuxGuitar's Java (`common/TuxGuitar-lib/.../io/tg/` for 2.x, `common/TuxGuitar-compat/.../io/tg/v10` to `v15` for 1.x, in github.com/helge17/tuxguitar). TuxGuitar is LGPL-2.1; code ported from it may go into this GPL-3.0-or-later plugin, with a notice in the files that hold it. Mateus's standing rule (9 Nov 2026): always delegate to a mature existing library when one exists and doesn't cause trouble; general crates do the rest here: **roxmltree** to read `content.xml`, **quick-xml** to write it, **zip** (no default features, `deflate-flate2-zlib-rs`, as the MusicXML plugin) for the container.
-- **One plugin, one id** (`oxiguitar.tuxguitar`, file `tuxguitar.oxp`), with two formats in its manifest so each form has its own signature: `tg` (2.x, read and write) and `tg1` (1.x, read only), both extension `tg`.
+- **Only the latest form** (Mateus, 9 Nov 2026): the ZIP-and-XML `.tg` of TuxGuitar 2.x, read and written, in one plugin. TuxGuitar is open source and free, so no one needs an old form: TuxGuitar 2.x still opens every older `.tg` (0.7 to 1.5, through its compatibility readers) and saves it as 2.x. The binary `.tg` of TuxGuitar 0.7 to 1.5 is not read; such a file gets OxiGuitar's usual "not recognised" message, and the README says to open it in TuxGuitar 2 and save it. The cost: TuxGuitar 1.x (Debian still ships 1.6.6) can't open what this plugin writes.
+- **No library**: there is no Rust library for `.tg`, so the reader and writer are our own code, ported from TuxGuitar's Java (`common/TuxGuitar-lib/.../io/tg/`, `TGStream`, `TGSongReaderImpl` and `TGSongWriterImpl`, in github.com/helge17/tuxguitar). TuxGuitar is LGPL-2.1; code ported from it may go into this GPL-3.0-or-later plugin, with a notice in the files that hold it. Mateus's standing rule (9 Nov 2026): always delegate to a mature existing library when one exists and doesn't cause trouble; general crates do the rest here: **roxmltree** to read `content.xml`, **quick-xml** to write it, **zip** (no default features, `deflate-flate2-zlib-rs`, as the MusicXML plugin) for the container.
+- **One plugin, one format** (`oxiguitar.tuxguitar`, file `tuxguitar.oxp`, format `tg`, extension `tg`, read and write).
 
 ## Recognising the files
 
-Both forms can be told apart with interface 1.7's tests, so the plugin needs no core change:
+Interface 1.7's tests suffice, so the plugin needs no core change:
 
 - **2.x**: a ZIP holding `version.txt` and `content.xml`. A signature names one ZIP member, so `{"zip_member": "version.txt"}`, and the reader checks the rest. `version.txt` is one line, `TuxGuitar_file_format MAJOR.MINOR` (with or without a newline): major 2 is read, a newer minor is read with a note in the log (TuxGuitar does the same), another major is refused with a message naming the version.
-- **1.x**: a length byte, then `TuxGuitar File Format - 1.N` in UTF-16BE (`1b 00 54 00 75 ...`): `{"at": 1, "hex": "005400750078004700750069007400610072002000460069006c006500200046006f0072006d00610074"}` ("TuxGuitar File Format"). The reader takes the version from the rest of the string.
+- The binary 1.x form (a length byte, then `TuxGuitar File Format - 1.N` in UTF-16BE; 0.7 and 0.8 say `TG_DEVEL-…`) is not claimed.
 
 ## Reading
 
@@ -36,7 +36,7 @@ The 2.x form exactly as TuxGuitar 2.1 writes it: `version.txt` (`TuxGuitar_file_
 
 ## Tests
 
-- **TuxGuitar's own test files** (`reference_15.tg`, `reference_20.tg`, `Untitled_15.tg`, `Untitled_extended_21.tg`, `Untitled_extended_30.tg` for the refused major version, `invalidContent.tg`, `noVersion.tg`, `notTuxGuitar.tg` and the feature files `letRing_20.tg`, `tempo_20.tg`, `tiedNotes_20.tg`, `altRepeatLoop_20.tg`, `track_pitch_20.tg`, `test_midi_20.tg`) as fixtures, with their LGPL-2.1 notice (`fixtures/tuxguitar/NOTICE`), checked note by note against what TuxGuitar's tests say they hold.
+- **TuxGuitar's own test files** (`reference_20.tg`, `Untitled_20.tg`, `Untitled_extended_21.tg`, `Untitled_extended_30.tg` for the refused major version, `invalidContent.tg`, `noVersion.tg`, `notTuxGuitar.tg`, `reference_15.tg` (a 1.x file, which the signature must not claim) and the feature files `letRing_20.tg`, `tempo_20.tg`, `tiedNotes_20.tg`, `altRepeatLoop_20.tg`, `track_pitch_20.tg`, `test_midi_20.tg`) as fixtures, with their LGPL-2.1 notice (`fixtures/tuxguitar/NOTICE`), checked note by note against what TuxGuitar's tests say they hold.
 - **Our own fixture**: the core's test song written by the plugin (`fixtures/oxiguitar-test.tg`), read back exactly (`tests/read_write.rs`).
 - **The private corpus**, locally (`tests/corpus.rs`, files in the ignored `corpus/files/`): all 104 Guitar Pro files converted to `.tg` with `oxiguitar-cli convert`, read back with the same tracks, note counts, bars and bar check; exact from the first round trip where the writer names no losses, stable from the second otherwise.
 - The contract suite (`tests/contract.rs`), damaged and hostile input, and fuzz targets for reading both forms and for writing (`fuzz/`).
