@@ -10,7 +10,7 @@ repository, github.com/helge17/tuxguitar, at commit
   fix_20.tg, freeEditionMode_20.tg, getNextTied_20.tg, invalidContent.tg,
   invalidContent2.tg, invalidVersion.tg, letRing_20.tg, noVersion.tg,
   notTuxGuitar.tg, reference_20.tg, tempo_20.tg, test_20.xml,
-  track_pitch_20.tg
+  track_pitch_20.tg, and the format's schema, tuxguitar_20.xsd
 - common/TuxGuitar-compat/src/test/resources/: Untitled_15.tg,
   reference_15.tg
 - common/TuxGuitar-editor-utils/src/test/resources/: tiedNotes_20.tg
@@ -22,5 +22,6 @@ docs/LICENSE). These files are distributed here under that licence, whose
 text is at https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 
 OxiGuitar's tests read them to check that its TuxGuitar plugin reads what
-TuxGuitar's own tests say they hold (tests/tuxguitar_files.rs), and to
-seed the fuzzer.
+TuxGuitar's own tests say they hold (tests/tuxguitar_files.rs), that
+what it writes validates against TuxGuitar's schema (tests/read_write.rs),
+and to seed the fuzzer.

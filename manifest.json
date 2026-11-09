@@ -1,7 +1,7 @@
 {
   "interface": "1.7",
   "id": "oxiguitar.tuxguitar",
-  "name": "TuxGuitar files",
+  "name": "TuxGuitar",
   "version": "0.0.0",
   "description": "Reads and writes TuxGuitar 2's files (.tg).",
   "authors": ["Mateus Rocha de Paula", "The OxiGuitar contributors"],
@@ -10,7 +10,7 @@
   "formats": [
     {
       "id": "tg",
-      "name": "TuxGuitar file",
+      "name": "TuxGuitar 2",
       "extensions": ["tg"],
       "media_types": ["application/x-tuxguitar"],
       "read": true,

@@ -226,7 +226,7 @@ impl Reader {
             if let Some(node) = child(*header, "repeatAlternative") {
                 for alt in children(node, "alternative") {
                     let n = int(alt, &at)?;
-                    match u32::try_from(n - 1).ok().filter(|n| *n < 16) {
+                    match u32::try_from(n.saturating_sub(1)).ok().filter(|n| *n < 16) {
                         Some(bit) => mb.alternate_endings |= 1 << bit,
                         None => self
                             .log
@@ -353,7 +353,7 @@ impl Reader {
         }
         let tuning = strings
             .iter()
-            .map(|p| Pitch(u8::try_from((p - lower).clamp(0, 127)).unwrap_or(0)))
+            .map(|p| Pitch(u8::try_from(p.saturating_sub(lower).clamp(0, 127)).unwrap_or(0)))
             .collect();
         let mut staff = Staff {
             tuning,
@@ -475,7 +475,9 @@ impl Reader {
             let precise: i64 = child(node, "preciseStart")
                 .ok_or_else(|| format!("{at}: a beat has no start"))
                 .and_then(|n| int(n, &at))?;
-            let start = Ratio::new(precise - tg::START, tg::WHOLE)
+            let start = precise
+                .checked_sub(tg::START)
+                .and_then(|p| Ratio::new(p, tg::WHOLE))
                 .and_then(|s| s.checked_sub(bar_start))
                 .ok_or_else(|| format!("{at}: a beat's start is out of range"))?;
             let bi_shared = shared.len();
@@ -689,7 +691,7 @@ impl Reader {
         percussion: bool,
         at: &str,
     ) -> Option<NotePlace> {
-        let open = usize::try_from(string - 1)
+        let open = usize::try_from(string.saturating_sub(1))
             .ok()
             .and_then(|s| staff.tuning.get(s));
         let Some(open) = open else {
@@ -698,7 +700,9 @@ impl Reader {
             return None;
         };
         if percussion {
-            let pitch = i64::from(open.0) + fret + pitch_offset;
+            let pitch = i64::from(open.0)
+                .saturating_add(fret)
+                .saturating_add(pitch_offset);
             return match u8::try_from(pitch).ok().filter(|p| *p <= 127) {
                 Some(p) => Some(NotePlace::Pitched(Pitch(p))),
                 None => {

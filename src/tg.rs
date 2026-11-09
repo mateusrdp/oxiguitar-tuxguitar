@@ -87,9 +87,6 @@ pub(crate) const BEND_CENTS: i32 = 50;
 /// whammy's 50 units, 100 cents, as one).
 pub(crate) const WHAMMY_CENTS: i32 = 100;
 
-/// The largest bend and dive TuxGuitar's editors make, in their units.
-pub(crate) const MAX_BEND: i32 = 12;
-
 /// TuxGuitar's offset range, in semitones (`TGTrack`).
 pub(crate) const MAX_OFFSET: i64 = 24;
 
