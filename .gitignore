@@ -12,3 +12,6 @@
 Thumbs.db
 
 /dist/
+
+# The private test corpus, unpacked for local tests.
+/corpus/
