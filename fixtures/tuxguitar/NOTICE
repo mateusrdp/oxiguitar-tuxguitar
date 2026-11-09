@@ -1,0 +1,26 @@
+TuxGuitar's test files
+======================
+
+The files in this folder are TuxGuitar's, copied unchanged from its
+repository, github.com/helge17/tuxguitar, at commit
+9f2647dfc216401cc70569f1ab25ad03e18cab5b (3 Nov 2026):
+
+- common/TuxGuitar-lib/src/test/resources/: Untitled_20.tg,
+  Untitled_extended_21.tg, Untitled_extended_30.tg, altRepeatLoop_20.tg,
+  fix_20.tg, freeEditionMode_20.tg, getNextTied_20.tg, invalidContent.tg,
+  invalidContent2.tg, invalidVersion.tg, letRing_20.tg, noVersion.tg,
+  notTuxGuitar.tg, reference_20.tg, tempo_20.tg, test_20.xml,
+  track_pitch_20.tg
+- common/TuxGuitar-compat/src/test/resources/: Untitled_15.tg,
+  reference_15.tg
+- common/TuxGuitar-editor-utils/src/test/resources/: tiedNotes_20.tg
+- common/TuxGuitar-midi/src/test/resources/: test_midi_20.tg
+
+TuxGuitar is copyright its authors (see its AUTHORS file) and is released
+under the GNU Lesser General Public License, version 2.1 (its
+docs/LICENSE). These files are distributed here under that licence, whose
+text is at https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+
+OxiGuitar's tests read them to check that its TuxGuitar plugin reads what
+TuxGuitar's own tests say they hold (tests/tuxguitar_files.rs), and to
+seed the fuzzer.
