@@ -2,7 +2,7 @@
   "interface": "1.7",
   "id": "oxiguitar.tuxguitar",
   "name": "TuxGuitar",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Reads and writes TuxGuitar 2's files (.tg).",
   "authors": ["Mateus Rocha de Paula", "The OxiGuitar contributors"],
   "license": "GPL-3.0-or-later",
