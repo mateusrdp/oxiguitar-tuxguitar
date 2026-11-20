@@ -1,0 +1,10 @@
+{
+  "repository": "mateusrdp/oxiguitar-tuxguitar",
+  "plugins": [
+    {"name": "tuxguitar", "package": "oxiguitar-tuxguitar-plugin", "library": "oxiguitar_tuxguitar_plugin"}
+  ],
+  "corpus": {
+    "uses": true,
+    "through_core": {"extensions": ["tg"], "write_as": ["tg"], "readers": ["guitarpro"]}
+  }
+}

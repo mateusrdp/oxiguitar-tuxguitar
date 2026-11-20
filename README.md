@@ -39,6 +39,7 @@ Rust 1.99 or later from [rustup](https://rustup.rs). The plugin SDK and the scor
 ```sh
 cargo test                  # the reader, the writer, and the plugin as an .oxp file
 ./build-oxp.sh              # dist/tuxguitar-VERSION-SYSTEM-ARCH.oxp
+python3 scripts/test-all.py --corpus DIR   # every test on your own files, as the manual's Testing page says
 ```
 
 `cargo test` reads TuxGuitar's own test files and checks them against what TuxGuitar's tests say they hold, writes what it read and reads it back, checks what it writes against TuxGuitar's schema of the format (where `xmllint` is installed), then builds the plugin as the `.oxp` file we ship and checks it through OxiGuitar's own plugin host (the contract suite of `oxiguitar-plugin-test`). With TuxGuitar files of a private collection in `corpus/files/` (never committed), `cargo test --test corpus` round-trips each of them. [CONTRIBUTING.md](CONTRIBUTING.md) has the rest of the rules.
