@@ -20,11 +20,15 @@ The file type is decided from the file's contents, never from its extension: Oxi
 
 [docs/design.md](docs/design.md) says what is read and written and what is left out, and why.
 
+## Manual
+
+The manual is at <https://mateusrdp.github.io/oxiguitar-tuxguitar/>. Its source is in [docs/manual](docs/manual). It covers what the plugin is for, how it works, what it needs and how to install it.
+
 ## Install
 
-Every [release](https://github.com/mateusrdp/oxiguitar-tuxguitar/releases) holds a zip per system (Linux x86_64 and ARM64, Windows x86_64 and ARM64, macOS), a `.deb` and an `.rpm` for Linux, a per-user installer for Windows (no administrator needed), a `.pkg` for macOS, and a `SHA256SUMS` file. The OxiGuitar manual's [install page](https://mateusrdp.github.io/oxiguitar/installing.html) says which one to use and how to keep plugins updated through your package manager.
+Every [release](https://github.com/mateusrdp/oxiguitar-tuxguitar/releases) holds a zip per system (Linux x86_64 and ARM64, Windows x86_64 and ARM64, macOS), a `.deb` and an `.rpm` for Linux, a per-user installer for Windows (no administrator needed), a `.pkg` for macOS, and a `SHA256SUMS` file. The [manual's install page](https://mateusrdp.github.io/oxiguitar-tuxguitar/install.html) says which one to use and how to keep it updated.
 
-You can also copy `tuxguitar.oxp` from a zip into OxiGuitar's plugin folder by hand ([Settings and plugins](https://mateusrdp.github.io/oxiguitar/plugins.html)).
+You can also copy `tuxguitar.oxp` from a zip into OxiGuitar's plugin folder by hand ([Installing](https://mateusrdp.github.io/oxiguitar-tuxguitar/install.html)).
 
 Found a file it reads wrongly? Please [open an issue](https://github.com/mateusrdp/oxiguitar-tuxguitar/issues/new) with the file if you can share it.
 
@@ -48,7 +52,7 @@ What is where:
 
 ## Releases
 
-The maintainer releases with the Release button in [oxiguitar-packages](https://github.com/mateusrdp/oxiguitar-packages): it bumps the version, merges `develop` into `main` and tags it. [`release.yml`](.github/workflows/release.yml) then builds the plugin for every system with the packages' reusable plugin-release workflow, makes the packages and a draft release; publishing the draft starts [`publish.yml`](.github/workflows/publish.yml), which tells the package repositories. Every pull request gets the same builds as test builds, kept for 14 days under its Release run.
+The maintainer releases with the Release button in oxiguitar-packages: it bumps the version, merges `develop` into `main` and tags it. [`release.yml`](.github/workflows/release.yml) then builds the plugin for every system with the packages' reusable plugin-release workflow, makes the packages and a draft release; publishing the draft starts [`publish.yml`](.github/workflows/publish.yml), which tells the package repositories. Every pull request gets the same builds as test builds, kept for 14 days under its Release run.
 
 ## Licence
 
