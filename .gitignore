@@ -15,3 +15,6 @@ Thumbs.db
 
 # The private test corpus, unpacked for local tests.
 /corpus/
+
+# The built manual
+/docs/manual/book/
