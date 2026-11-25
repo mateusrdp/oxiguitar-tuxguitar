@@ -6,7 +6,7 @@
 name = "oxiguitar-tuxguitar-plugin"
 description = "The OxiGuitar format plugin for TuxGuitar files: reads and writes TuxGuitar 2's .tg files."
 # 0.0.0 until the first release: the Release button makes it 0.1.0.
-version = "0.1.1"
+version = "0.2.0"
 edition = "2024"
 # Rust from rustup, raised only when something needs it (CONTRIBUTING.md).
 rust-version = "1.99"
@@ -29,8 +29,10 @@ oxp = []
 # 0.18.0). Nothing of OxiGuitar's is on crates.io. The reader reads into the
 # core's model and converts it for the plugin interface, the writer the
 # other way.
-oxiguitar-plugin = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.18.0" }
-oxiguitar-model = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.18.0", features = ["wire"] }
+# Now at v0.23.0 (plugin interface 1.16; plugin files are tar archives,
+# mateusrdp/oxiguitar#347).
+oxiguitar-plugin = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.23.0" }
+oxiguitar-model = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.23.0", features = ["wire"] }
 # No Rust library reads or writes .tg files, so the format is our own code
 # (ported from TuxGuitar's, LGPL-2.1); general crates do the rest, exactly
 # as published (Mateus, 9 Nov 2026): content.xml is read with roxmltree,
@@ -43,7 +45,7 @@ zip = { version = "9", default-features = false, features = ["deflate-flate2-zli
 [dev-dependencies]
 # The contract suite (tests/contract.rs): builds the .oxp file and checks it
 # through OxiGuitar's own plugin host.
-oxiguitar-plugin-test = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.18.0" }
+oxiguitar-plugin-test = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.23.0" }
 serde_json = "1"
 
 # Plugins deny `unsafe` rather than forbid it: `export_plugin!` allows it on

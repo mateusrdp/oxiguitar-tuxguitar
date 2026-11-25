@@ -2,6 +2,8 @@
 
 The TuxGuitar plugin for [OxiGuitar](https://github.com/mateusrdp/oxiguitar), a free, open-source guitar tablature and score viewer, editor and player for Windows, macOS and Linux. With it OxiGuitar opens the songs of [TuxGuitar](https://github.com/helge17/tuxguitar), the free tablature editor, and saves songs TuxGuitar opens.
 
+In plain words: TuxGuitar is a free, open-source tab editor written in Java, long the tab editor of choice on Linux. Its 2.x files are a ZIP holding the song as XML; this plugin reads and writes them, so you can move songs between the two programs. The [manual](https://mateusrdp.github.io/oxiguitar-tuxguitar/) says what comes across.
+
 | Plugin file | Id | Reads | Writes |
 | --- | --- | --- | --- |
 | `tuxguitar.oxp` | `oxiguitar.tuxguitar` | TuxGuitar 2 files (.tg) | TuxGuitar 2 files (.tg) |
@@ -39,6 +41,7 @@ Rust 1.99 or later from [rustup](https://rustup.rs). The plugin SDK and the scor
 ```sh
 cargo test                  # the reader, the writer, and the plugin as an .oxp file
 ./build-oxp.sh              # dist/tuxguitar-VERSION-SYSTEM-ARCH.oxp
+python3 scripts/test-all.py --corpus DIR   # every test on your own files, as the manual's Testing page says
 ```
 
 `cargo test` reads TuxGuitar's own test files and checks them against what TuxGuitar's tests say they hold, writes what it read and reads it back, checks what it writes against TuxGuitar's schema of the format (where `xmllint` is installed), then builds the plugin as the `.oxp` file we ship and checks it through OxiGuitar's own plugin host (the contract suite of `oxiguitar-plugin-test`). With TuxGuitar files of a private collection in `corpus/files/` (never committed), `cargo test --test corpus` round-trips each of them. [CONTRIBUTING.md](CONTRIBUTING.md) has the rest of the rules.
@@ -53,6 +56,10 @@ What is where:
 ## Releases
 
 The maintainer releases with the Release button in oxiguitar-packages: it bumps the version, merges `develop` into `main` and tags it. [`release.yml`](.github/workflows/release.yml) then builds the plugin for every system with the packages' reusable plugin-release workflow, makes the packages and a draft release; publishing the draft starts [`publish.yml`](.github/workflows/publish.yml), which tells the package repositories. Every pull request gets the same builds as test builds, kept for 14 days under its Release run.
+
+## Credits
+
+The reader and writer are a port of [TuxGuitar](https://github.com/helge17/tuxguitar)'s own Java code (Julian Casadesus, helge17 and contributors, LGPL-2.1), on [roxmltree](https://github.com/RazrFalcon/roxmltree), [quick-xml](https://github.com/tafia/quick-xml) and [zip](https://github.com/zip-rs/zip2) with [zlib-rs](https://github.com/trifectatechfoundation/zlib-rs). Built on OxiGuitar's plugin SDK. Thank you to the TuxGuitar team for a free tab editor and code clear enough to port. The manual's [Credits](https://mateusrdp.github.io/oxiguitar-tuxguitar/credits.html) page lists every project with its authors and licence. Thank you to all of them.
 
 ## Licence
 

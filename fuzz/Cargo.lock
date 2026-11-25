@@ -238,7 +238,7 @@ dependencies = [
 
 [[package]]
 name = "oxiguitar-tuxguitar-fuzz"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
  "libfuzzer-sys",
  "oxiguitar-tuxguitar-plugin",
@@ -246,7 +246,7 @@ dependencies = [
 
 [[package]]
 name = "oxiguitar-tuxguitar-plugin"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
  "oxiguitar-model",
  "oxiguitar-plugin",
